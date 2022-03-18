@@ -29,7 +29,36 @@ defineProps({
             </template>
         </div>
 
-        <h1>Senior Software Engineer Tech Challenge</h1>
+        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+            <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
+                <div class="grid grid-cols-1 md:grid-cols-1">
+                    <div v-for="item in 10" class="p-6">
+                        <div class="flex items-center">
+                            <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="avatar" class="w-8 h-8 text-gray-500">
+                            <div class="ml-4 text-lg leading-7 font-semibold">
+                                <a href="https://laracasts.com" class="underline text-gray-900 dark:text-white">Repository item #{{item}}</a></div>
+                        </div>
+
+                        <div class="ml-12">
+                            <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                                Repository description {{item}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-center mt-4 sm:items-center sm:justify-between">
+                <div class="text-center text-sm text-gray-500 sm:text-left">
+                    <div class="flex items-center">
+                        <a href="https://baba.besmart.ma" class="ml-1 underline">
+                            Anass Baba
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
 
     </div>
@@ -54,6 +83,8 @@ defineProps({
     .text-gray-500 {
         color: #a0aec0;
         color: rgba(160, 174, 192, var(--tw-text-opacity));
+        width: 100px;
+        height: 100px;
     }
 
     .text-gray-600 {
@@ -97,4 +128,5 @@ defineProps({
             color: rgba(203, 213, 224, var(--tw-text-opacity));
         }
     }
+
 </style>
