@@ -17,6 +17,9 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('gitUsername')->unique();
+            $table->string('gitCountRpViews');
+            $table->string('gitCountRps');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
