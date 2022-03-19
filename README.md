@@ -15,3 +15,17 @@ Install Composer dependecies :
 $ cd challenge2K22_senior && composer install
 ```
 
+### Project launch
+Create database with utf8mb4 encoding :
+
+```
+CREATE DATABASE CodingChallengesBackend CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
+Run Migrations :
+```sh
+$ php artisan migrate
+```
+Run Seeders:
+```sh
+$ php artisan db:seed
+```
