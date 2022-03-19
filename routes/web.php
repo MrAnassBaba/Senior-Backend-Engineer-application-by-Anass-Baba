@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContributorsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -23,6 +24,10 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
+Route::get('list', [ContributorsController::class,'index'])->name('listRepository');
+Route::get('createRepository', [ContributorsController::class,'createRepository'])->name('formToCreateRepository');
+Route::post('createRepository', [ContributorsController::class,'actionPostToCreateRepository'])->name('createRepository');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

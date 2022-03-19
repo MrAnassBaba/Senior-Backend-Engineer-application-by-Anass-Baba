@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Repositories\userReps;
+namespace App\Repositories\UserReps;
 
 use App\Models\UserReps;
 use App\Repositories\AbstractRepository;
 use App\Repositories\RepositoryInterface;
 
-class userRepsRepository extends AbstractRepository
+class UserRepsRepository extends AbstractRepository
 {
 
     function model()

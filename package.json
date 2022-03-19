@@ -13,6 +13,7 @@
         "@inertiajs/inertia": "^0.11.0",
         "@inertiajs/inertia-vue3": "^0.6.0",
         "@inertiajs/progress": "^0.2.6",
+        "@nuxtjs/vuetify": "^1.12.3",
         "@tailwindcss/forms": "^0.4.0",
         "@vue/compiler-sfc": "^3.2.30",
         "autoprefixer": "^10.4.2",
@@ -25,5 +26,8 @@
         "tailwindcss": "^3.0.18",
         "vue": "^3.2.30",
         "vue-loader": "^16.1.2"
+    },
+    "dependencies": {
+        "vuetify": "^2.6.4"
     }
 }

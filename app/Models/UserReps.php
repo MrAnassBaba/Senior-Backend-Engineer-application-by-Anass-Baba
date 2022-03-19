@@ -17,6 +17,18 @@ class UserReps extends Model
     const URL_RPS_COLUMN_NAME                       =   'urlRps';
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        self::USER_KEY_COLUMN_NAME,
+        self::NAME_COLUMN_NAME,
+        self::DESCRIPTION_COLUMN_NAME,
+        self::URL_RPS_COLUMN_NAME,
+    ];
+
+    /**
      * Getters
      */
     public function getKey()
