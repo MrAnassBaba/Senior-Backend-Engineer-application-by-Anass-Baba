@@ -16,6 +16,7 @@ class User extends Authenticatable
     const PRIMARY_KEY_COLUMN_NAME                   =   'id';
     const NAME_COLUMN_NAME                          =   'name';
     const EMAIL_COLUMN_NAME                         =   'email';
+    const GITAVATAR_COLUMN_NAME                     =   'gitAvatar';
     const GIT_USERNAME_COLUMN_NAME                  =   'gitUsername';
     const GIT_COUNT_RP_VIEWS_COLUMN_NAME            =   'gitCountRpViews';
     const GIT_COUNT_RPS_COLUMN_NAME                 =   'gitCountRps';
@@ -68,6 +69,11 @@ class User extends Authenticatable
         return $this->getAttributeValue(self::NAME_COLUMN_NAME);
     }
 
+    public function getGitAvatar()
+    {
+        return $this->getAttributeValue(self::GITAVATAR_COLUMN_NAME);
+    }
+
     public function getUserEmail()
     {
         return $this->getAttributeValue(self::EMAIL_COLUMN_NAME);
@@ -104,4 +110,6 @@ class User extends Authenticatable
             UserReps::USER_KEY_COLUMN_NAME,
             self::PRIMARY_KEY_COLUMN_NAME);
     }
+
+
 }
