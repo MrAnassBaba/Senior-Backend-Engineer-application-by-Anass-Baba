@@ -30,7 +30,6 @@ class MainController extends Controller
      */
     public function welcome(): Response
     {
-        dd($this->gitHubApiService->getListRepository());
         return Inertia::render('Welcome', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
