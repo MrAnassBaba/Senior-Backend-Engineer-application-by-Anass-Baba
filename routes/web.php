@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ContributorsController;
+use App\Http\Controllers\MainController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -16,14 +17,7 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+Route::get('/', [MainController::class,'welcome']);
 
 Route::get('list', [ContributorsController::class,'index'])->name('listRepository');
 Route::get('createRepository', [ContributorsController::class,'createRepository'])->name('formToCreateRepository');

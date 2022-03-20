@@ -51,7 +51,6 @@ class ContributorsController extends Controller
 
         $userKey = 1; // Auth::id();
         $this->userRepsService->createUserReps($request,$userKey);
-        // listRepository
         return redirect()->route('createRepository')->with('message', 'repository create with success');
     }
 }
