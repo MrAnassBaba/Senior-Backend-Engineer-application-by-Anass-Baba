@@ -46,9 +46,10 @@ jobs:
       run: chmod -R 777 storage bootstrap/cache
     - name: Clear Config
       run: php artisan config:clear
-    - name: Run Migration
-      run: php artisan migrate -v
-    - name: Run Seeders
-      run: php artisan db:seed -v
+    # Prod: 
+    # - name: Run Migration
+    #  run: php artisan migrate -v
+    # - name: Run Seeders
+    #  run: php artisan db:seed -v
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       run: vendor/bin/phpunit
