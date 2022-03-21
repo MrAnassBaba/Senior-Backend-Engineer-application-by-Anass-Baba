@@ -16,7 +16,7 @@ class GitHubApiService
     public function getListRepository()
     {
         $client = new Client();
-        $response = $client->request('GET', 'https://api.github.com/users/MrAnassBaba/repos');
+        $response = $client->request('GET', 'https://api.github.com/users/NextmediaMa/repos');
         return json_decode($response->getBody());
     }
 
