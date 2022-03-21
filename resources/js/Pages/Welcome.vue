@@ -5,14 +5,17 @@
                <h1 class="h1">leaders board for contributors to a repository</h1>
 
                <p class="f4 color-fg-muted col-md-6 mx-auto">
-                   See what the GitHub community is most excited about today.
+                   <a href="/createRepository" class="btn-green inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150 ml-4 button"> create your repository </a>
                </p>
+
+               <div id="hideMe" v-if="isActive" ref="alert" class="clipboard-alert">repository copied successfully</div>
+
            </div>
        </div>
        <div class="position-relative container-lg p-responsive pt-6">
            <div class="Box">
                <div>
-                   <article v-for="item in $page.props.listRepositories" class="Box-row">
+                   <article v-for="(item , index) in $page.props.listRepositories" class="Box-row">
                        <div class="float-right d-flex">
 
                            <template class="js-unstar-confirmation-dialog-template">
@@ -33,32 +36,19 @@
                                </div>
                            </template>
 
-                           <div data-view-component="true" class="js-toggler-container js-social-container starring-container BtnGroup d-flex">
-                               <form class="starred js-social-form BtnGroup-parent flex-auto js-deferred-toggler-target" data-turbo="false" action="/microsoft/routeros-scanner/unstar" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="fytNdxGr1ysUxvEHQjY8r99QAtuDRcMI3LOHjwwU-mKyUCTC9NQ6Rn05JspG2vP8O1Gop3vo6i5Rs7kS9Y1NMg" autocomplete="off">
-                                   <input type="hidden" value="nRDrcn7rI1StIel0b5MtDYWkXwOa1-G7_GwTRH7fX-VQa4LHm5TOOcTePrlrf-JeYaX1f2J6yJ1xbC3Zh0botQ" data-csrf="true" class="js-confirm-csrf-token">
-                                   <input type="hidden" name="context" value="trending">
-                                   <button data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;UNSTAR_BUTTON&quot;,&quot;repository_id&quot;:467212329,&quot;originating_url&quot;:&quot;https://github.com/trending&quot;,&quot;user_id&quot;:95491200}}" data-hydro-click-hmac="80239c3e14129568eeb108f4107bb2d155a4fc2f1b115ce2599647f12033713e" data-ga-click="Repository, click unstar button, action:trending#index; text:Unstar" aria-label="Unstar this repository" type="submit" data-view-component="true" class="rounded-left-2 border-right-0 btn-sm btn BtnGroup-item">  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-star-fill starred-button-icon d-none d-md-inline-block mr-2">
-                                       <path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"></path>
-                                   </svg><svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-star-fill starred-button-icon mr-0 d-inline-block d-md-none">
-                                       <path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"></path>
-                                   </svg>
-                                       <span data-view-component="true" class="d-none d-md-inline">
-                                                  Starred
-                                        </span>
-                                   </button></form>
-                               <form class="unstarred js-social-form BtnGroup-parent flex-auto" data-turbo="false" action="/microsoft/routeros-scanner/star" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="ZULXos14aSGW9cuUc0fzrYxMhKfr2ZI5bq9I5sbKHwxJMltdhFvYVXOyDfW60BYbPAIEPG2r32DzBTEGoVAh3Q" autocomplete="off">
-                                   <input type="hidden" name="context" value="trending">
-                                   <button data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;STAR_BUTTON&quot;,&quot;repository_id&quot;:467212329,&quot;originating_url&quot;:&quot;https://github.com/trending&quot;,&quot;user_id&quot;:95491200}}" data-hydro-click-hmac="a9a0fdcbcc7851369081ff04a7fac50d4d49843095e69092ef5025f3b795d5cd" data-ga-click="Repository, click star button, action:trending#index; text:Star" aria-label="Star this repository" type="submit" data-view-component="true" class="js-toggler-target rounded-left-2 btn-sm btn BtnGroup-item">  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-star d-none d-md-inline-block mr-2">
-                                       <path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25zm0 2.445L6.615 5.5a.75.75 0 01-.564.41l-3.097.45 2.24 2.184a.75.75 0 01.216.664l-.528 3.084 2.769-1.456a.75.75 0 01.698 0l2.77 1.456-.53-3.084a.75.75 0 01.216-.664l2.24-2.183-3.096-.45a.75.75 0 01-.564-.41L8 2.694v.001z"></path>
-                                   </svg><svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-star mr-0 d-inline-block d-md-none">
-                                       <path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25zm0 2.445L6.615 5.5a.75.75 0 01-.564.41l-3.097.45 2.24 2.184a.75.75 0 01.216.664l-.528 3.084 2.769-1.456a.75.75 0 01.698 0l2.77 1.456-.53-3.084a.75.75 0 01.216-.664l2.24-2.183-3.096-.45a.75.75 0 01-.564-.41L8 2.694v.001z"></path>
-                                   </svg>
-                                       <span data-view-component="true" class="d-none d-md-inline">
-                                              select a repository
-                                    </span>
-                                   </button></form>
+                           <div data-view-component="true" class="js-toggler-container js-social-container starring-container BtnGroup">
+
+
+                               <textarea ref="clipboard" class="go-out">{{item.html_url}}</textarea>
+
+                               <button @click="vuecopydemo(index)" class="clipboard">
+                                   select a repository
+                               </button>
+
+
                            </div>
                        </div>
+
 
                        <h1 class="h3 lh-condensed">
                            <a data-hydro-click="{&quot;event_type&quot;:&quot;explore.click&quot;,&quot;payload&quot;:{&quot;click_context&quot;:&quot;TRENDING_REPOSITORIES_PAGE&quot;,&quot;click_target&quot;:&quot;REPOSITORY&quot;,&quot;click_visual_representation&quot;:&quot;REPOSITORY_NAME_HEADING&quot;,&quot;actor_id&quot;:95491200,&quot;record_id&quot;:467212329,&quot;originating_url&quot;:&quot;https://github.com/trending&quot;,&quot;user_id&quot;:95491200}}" data-hydro-click-hmac="781555fc86d20c02326c38d11d9be3f74cef7f0317b2417b74e8c467dcc9a10d" v-bind:href="item.html_url" data-view-component="true">
@@ -112,10 +102,68 @@
                </div>
            </div>
        </div>
+
    </div>
 </template>
 
+<script>
+export default {
+    name: "Welcome",
+    data () {
+        return {
+            alert: false,
+            isActive: false,
+        }
+    },
+    methods: {
+        vuecopydemo(index) {
+            // copied URL
+            this.$refs.clipboard[index].select();
+            document.execCommand('copy');
+            this.isActive = true;
+            setTimeout(() => this.isActive = false, 800)
+
+        }
+    },
+}
+</script>
+
+
 <style scoped>
+.clipboard-alert{
+    right: 100px;
+    top: 12px;
+    background: aquamarine;
+    padding: 10px;
+    font-size: 12px;
+    border-radius: 10px;
+}
+.go-out{
+    position: absolute;
+    left: -99999px;
+}
+.clipboard{
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    white-space: nowrap;
+}
+.btn-green{
+     width: 100%;
+     text-align: center;
+     color: white;
+     background: #2da44e;
+     padding: 15px;
+     margin: 0 auto;
+     display: inline-block;
+     font-weight: bold;
+}
+.btn-green:hover{
+    text-decoration: none;
+}
 /*! CSS Used from: https://github.githubassets.com/assets/frameworks-e484c110d83e.css ; media=all */
 @media all{
     h1{font-size:2em;margin:.67em 0;}
@@ -340,4 +388,29 @@
 @keyframes rotate-keyframes{100%{transform:rotate(360deg);}}
 @keyframes SelectMenu-modal-animation{0%{opacity:0;transform:scale(0.9);}}
 @keyframes SelectMenu-modal-animation--sm{0%{opacity:0;transform:translateY(-16px);}}
+#hideMe {
+    -moz-animation: cssAnimation 0s ease-in 5s forwards;
+    /* Firefox */
+    -webkit-animation: cssAnimation 0s ease-in 5s forwards;
+    /* Safari and Chrome */
+    -o-animation: cssAnimation 0s ease-in 5s forwards;
+    /* Opera */
+    animation: cssAnimation 0s ease-in 5s forwards;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+@keyframes cssAnimation {
+    to {
+        width:0;
+        height:0;
+        overflow:hidden;
+    }
+}
+@-webkit-keyframes cssAnimation {
+    to {
+        width:0;
+        height:0;
+        visibility:hidden;
+    }
+}
 </style>

@@ -5,6 +5,7 @@ namespace App\Services;
 use GuzzleHttp\Client;
 use http\Client\Response;
 use Psr\Http\Message\StreamInterface;
+use function PHPUnit\Framework\isEmpty;
 
 class GitHubApiService
 {
@@ -15,7 +16,9 @@ class GitHubApiService
     public function getListRepository()
     {
         $client = new Client();
-        $response = $client->request('GET', 'https://api.github.com/repositories');
+        $response = $client->request('GET', 'https://api.github.com/users/MrAnassBaba/repos');
         return json_decode($response->getBody());
     }
+
+
 }
