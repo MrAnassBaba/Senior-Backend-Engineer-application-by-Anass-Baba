@@ -29,3 +29,13 @@ Run Seeders:
 ```sh
 $ php artisan db:seed
 ```
+
+## Project setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
