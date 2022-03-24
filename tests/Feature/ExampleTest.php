@@ -17,8 +17,6 @@ class ExampleTest extends TestCase
     public function test_example()
     {
         $response = $this->get('/');
-        $value = Config::get('app.key');
-        dd("check value of key app on CI/CD",$value);
 
         $response->assertStatus(200);
     }

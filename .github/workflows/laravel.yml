@@ -46,8 +46,6 @@ jobs:
       run: chmod -R 777 storage bootstrap/cache
     - name: Optimize the framework for better performance
       run: php artisan optimize
-    - name: Clear Config
-      run: php artisan config:clear
     # Prod:
     # - name: Run Migration
     #  run: php artisan migrate -v
