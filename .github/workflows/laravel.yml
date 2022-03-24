@@ -51,5 +51,5 @@ jobs:
     #  run: php artisan migrate -v
     # - name: Run Seeders
     #  run: php artisan db:seed -v
-    - name: Execute tests (Unit and Feature tests) via PHPUnit
-      run: vendor/bin/phpunit
+    #- name: Execute tests (Unit and Feature tests) via PHPUnit
+    #  run: vendor/bin/phpunit
