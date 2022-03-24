@@ -11,7 +11,7 @@ class ListUsersTest extends TestCase
      *
      * @return void
      */
-    public function ListUsersTest()
+    public function test_list_users()
     {
         $response = $this->get('listUsers');
         $response->assertStatus(200);
