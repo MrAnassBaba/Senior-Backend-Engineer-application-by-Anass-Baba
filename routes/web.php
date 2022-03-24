@@ -20,7 +20,7 @@ use Inertia\Inertia;
 Route::get('/', [MainController::class,'welcome'])->name('home');
 Route::get('/callback', [MainController::class,'callback']);
 Route::get('listUsers', [MainController::class,'listUsers'])->name('listUsers');
-Route::get('list', [ContributorsController::class,'index'])->name('listRepository');
+Route::get('listRepository', [MainController::class,'listRepository'])->name('listRepository');
 Route::get('createRepository', [ContributorsController::class,'createRepository'])->name('formToCreateRepository');
 Route::post('createRepository', [ContributorsController::class,'actionPostToCreateRepository'])->name('createRepository');
 

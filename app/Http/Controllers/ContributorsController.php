@@ -28,14 +28,6 @@ class ContributorsController extends Controller
      * get list of repositories
      * @return \Inertia\Response
      */
-    public function index(): Response
-    {
-        return Inertia::render('ListRepository');
-    }
-    /**
-     * get list of repositories
-     * @return \Inertia\Response
-     */
     public function createRepository(): Response
     {
         return Inertia::render('createRepositories');

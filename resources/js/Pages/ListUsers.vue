@@ -2,48 +2,40 @@
    <div>
        <div class="color-bg-subtle border-bottom">
            <div class="container-lg p-responsive text-center py-6">
-               <h1 class="h1">List users</h1>
+               <h1 class="h1">list of users by their username, count PR reviews, count PRs</h1>
+               <p v-if="!$page.props.haveAccessToken" class="f4 color-fg-muted col-md-6 mx-auto">
+                   We're going to now talk to the GitHub API. Ready?
+                   <a :href="'https://github.com/login/oauth/authorize?scope=user&client_id='+$page.props.client_id+'&redirect_uri'+$page.props.redirect_uri+''" class="btn-green inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150 ml-4 button"> GitHub access </a>
+               </p>
 
-               <div id="hideMe" v-if="isActive" ref="alert" class="clipboard-alert">repository copied successfully</div>
+               <div v-if="$page.props.haveAccessToken">
+                   <p class="f4 color-fg-muted col-md-6 mx-auto">
+                       <a href="/listRepository" class="btn-green inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150 ml-4 button"> list repositories </a>
+                   </p>
+
+                   <p class="f4 color-fg-muted col-md-6 mx-auto">
+                       <a href="/createRepository" class="btn-green inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150 ml-4 button"> create repository</a>
+                   </p>
+                   <span>you have access to change date</span>
+                   <hr>
+                   <form action="/listUsers" method="get">
+                       <label for="startDate"> start date: </label>
+                       <input type="date" id="startDate" name="startDate" v-bind:value="$page.props.startDate">
+                       <label for="endDate"> end date: </label>
+                       <input type="date" id="endDate" name="endDate" v-bind:value="$page.props.endDate">
+
+                       <input type="submit" value="change date" class="btn-date">
+                   </form>
+               </div>
+
 
            </div>
        </div>
-       <div class="position-relative container-lg p-responsive pt-6">
+       <div class="position-relative container-lg p-responsive pt-6 width-50">
            <div class="Box">
                <div>
                    <article v-for="(item , index) in $page.props.listUsers" class="Box-row">
-                       <div class="float-right d-flex">
 
-                           <template class="js-unstar-confirmation-dialog-template">
-                               <div class="Box-header">
-                                   <h2 class="Box-title">Unstar this repository?</h2>
-                               </div>
-                               <div class="Box-body">
-                                   <p class="mb-3">
-                                       This will remove {{ repoNameWithOwner }} from the {{ listsWithCount }} that it's been added to.
-                                   </p>
-                                   <div class="form-actions">
-                                       <form class="js-social-confirmation-form" data-turbo="false" action="{{ confirmUrl }}" accept-charset="UTF-8" method="post">
-                                           <input type="hidden" name="authenticity_token" value="{{ confirmCsrfToken }}">
-                                           <input type="hidden" name="confirm" value="true">
-                                           <button data-close-dialog="true" type="submit"  class="btn-danger btn width-full">  Unstar
-                                           </button>
-                                       </form>    </div>
-                               </div>
-                           </template>
-
-                           <div  class="js-toggler-container js-social-container starring-container BtnGroup">
-
-
-                               <textarea ref="clipboard" class="go-out">{{item.html_url}}</textarea>
-
-                               <button @click="vuecopydemo(index)" class="clipboard">
-                                   select a repository
-                               </button>
-
-
-                           </div>
-                       </div>
 
 
                        <h1 class="lh-condensed">
@@ -58,15 +50,6 @@
 
                        </h1>
 
-                       <p class="col-9 color-fg-muted my-1 pr-4">
-                           {{item.description}}
-                       </p>
-
-
-
-
-
-
 
                    </article>
                </div>
@@ -78,23 +61,7 @@
 
 <script>
 export default {
-    name: "Welcome",
-    data () {
-        return {
-            alert: false,
-            isActive: false,
-        }
-    },
-    methods: {
-        vuecopydemo(index) {
-            // copied URL
-            this.$refs.clipboard[index].select();
-            document.execCommand('copy');
-            this.isActive = true;
-            setTimeout(() => this.isActive = false, 800)
-
-        }
-    },
+    name: "ListUsers",
 }
 </script>
 
@@ -131,10 +98,23 @@ export default {
      display: inline-block;
      font-weight: bold;
 }
+.btn-date{
+    background: #1169da;
+    color: #fff;
+    padding: 10px;
+    margin: 15px 10px;
+    border-radius: 5px;
+}
 .btn-green:hover{
     text-decoration: none;
 }
-/*! CSS Used from: https://github.githubassets.com/assets/frameworks-e484c110d83e.css ; media=all */
+.width-50{
+    width: 50% !important;
+}
+.lh-condensed {
+    margin: 0 auto;
+    display: table;
+}
 @media all{
     h1{font-size:2em;margin:.67em 0;}
     ::-webkit-input-placeholder{color:inherit;opacity:.54;}

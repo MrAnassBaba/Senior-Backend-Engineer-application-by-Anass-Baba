@@ -2,134 +2,40 @@
    <div>
        <div class="color-bg-subtle border-bottom">
            <div class="container-lg p-responsive text-center py-6">
-               <h1 class="h1">leaders board for contributors to a repository</h1>
+               <h1 class="h1">We're going to now talk to the GitHub API. Ready?</h1>
 
-<!--               <p class="f4 color-fg-muted col-md-6 mx-auto">
-                   <a href="/createRepository" class="btn-green inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150 ml-4 button"> create your repository </a>
-               </p>-->
-               <h3> We're going to now talk to the GitHub API. Ready?</h3>
-               <p class="f4 color-fg-muted col-md-6 mx-auto">
+               <p v-if="!$page.props.haveAccessToken" class="f4 color-fg-muted col-md-6 mx-auto">
+                   We're going to now talk to the GitHub API. Ready?
                    <a :href="'https://github.com/login/oauth/authorize?scope=user&client_id='+$page.props.client_id+'&redirect_uri'+$page.props.redirect_uri+''" class="btn-green inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150 ml-4 button"> GitHub access </a>
                </p>
+
+               <div v-if="$page.props.haveAccessToken">
+                   <p class="f4 color-fg-muted col-md-6 mx-auto">
+                       <a href="/listRepository" class="btn-green inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150 ml-4 button"> list repositories </a>
+                   </p>
+
+                   <p class="f4 color-fg-muted col-md-6 mx-auto">
+                       <a href="/listUsers" class="btn-green inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150 ml-4 button"> List users </a>
+                   </p>
+
+                   <p class="f4 color-fg-muted col-md-6 mx-auto">
+                       <a href="/createRepository" class="btn-green inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150 ml-4 button"> create repository</a>
+                   </p>
+               </div>
+
+
 
 
                <div id="hideMe" v-if="isActive" ref="alert" class="clipboard-alert">repository copied successfully</div>
 
            </div>
        </div>
-       <div class="position-relative container-lg p-responsive pt-6">
-           <div class="Box">
-               <div>
-                   <article v-for="(item , index) in $page.props.listRepositories" class="Box-row">
-                       <div class="float-right d-flex">
-
-                           <template class="js-unstar-confirmation-dialog-template">
-                               <div class="Box-header">
-                                   <h2 class="Box-title">Unstar this repository?</h2>
-                               </div>
-                               <div class="Box-body">
-                                   <p class="mb-3">
-                                       This will remove {{ repoNameWithOwner }} from the {{ listsWithCount }} that it's been added to.
-                                   </p>
-                                   <div class="form-actions">
-                                       <form class="js-social-confirmation-form" data-turbo="false" action="{{ confirmUrl }}" accept-charset="UTF-8" method="post">
-                                           <input type="hidden" name="authenticity_token" value="{{ confirmCsrfToken }}">
-                                           <input type="hidden" name="confirm" value="true">
-                                           <button data-close-dialog="true" type="submit" data-view-component="true" class="btn-danger btn width-full">  Unstar
-                                           </button>
-                                       </form>    </div>
-                               </div>
-                           </template>
-
-                           <div data-view-component="true" class="js-toggler-container js-social-container starring-container BtnGroup">
-
-
-                               <textarea ref="clipboard" class="go-out">{{item.html_url}}</textarea>
-
-                               <button @click="vuecopydemo(index)" class="clipboard">
-                                   select a repository
-                               </button>
-
-
-                           </div>
-                       </div>
-
-
-                       <h1 class="h3 lh-condensed">
-                           <a data-hydro-click="{&quot;event_type&quot;:&quot;explore.click&quot;,&quot;payload&quot;:{&quot;click_context&quot;:&quot;TRENDING_REPOSITORIES_PAGE&quot;,&quot;click_target&quot;:&quot;REPOSITORY&quot;,&quot;click_visual_representation&quot;:&quot;REPOSITORY_NAME_HEADING&quot;,&quot;actor_id&quot;:95491200,&quot;record_id&quot;:467212329,&quot;originating_url&quot;:&quot;https://github.com/trending&quot;,&quot;user_id&quot;:95491200}}" data-hydro-click-hmac="781555fc86d20c02326c38d11d9be3f74cef7f0317b2417b74e8c467dcc9a10d" v-bind:href="item.html_url" data-view-component="true">
-                               <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-repo mr-1 color-fg-muted">
-                                   <path fill-rule="evenodd" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"></path>
-                               </svg>
-
-                               <span data-view-component="true" class="text-normal">
-                                        {{item.full_name}}
-                                </span>
-                           </a>
-                       </h1>
-
-                       <p class="col-9 color-fg-muted my-1 pr-4">
-                           {{item.description}}
-                       </p>
-
-                       <div class="f6 color-fg-muted mt-2">
-                              <span class="d-inline-block ml-0 mr-3">
-                          <span class="repo-language-color" style="background-color: #3572A5"></span>
-                          <span itemprop="programmingLanguage">Python</span>
-                        </span>
-
-
-                           <a href="/microsoft/routeros-scanner/stargazers" data-view-component="true" class="Link--muted d-inline-block mr-3">
-                               <svg aria-label="star" role="img" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-star">
-                                   <path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25zm0 2.445L6.615 5.5a.75.75 0 01-.564.41l-3.097.45 2.24 2.184a.75.75 0 01.216.664l-.528 3.084 2.769-1.456a.75.75 0 01.698 0l2.77 1.456-.53-3.084a.75.75 0 01.216-.664l2.24-2.183-3.096-.45a.75.75 0 01-.564-.41L8 2.694v.001z"></path>
-                               </svg>
-                               252
-                           </a>
-                           <a href="/microsoft/routeros-scanner/network/members.routeros-scanner" data-view-component="true" class="Link--muted d-inline-block mr-3">
-                               <svg aria-label="fork" role="img" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-repo-forked">
-                                   <path fill-rule="evenodd" d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878zm3.75 7.378a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm3-8.75a.75.75 0 100-1.5.75.75 0 000 1.5z"></path>
-                               </svg>
-                               44
-                           </a>
-                           <span data-view-component="true" class="d-inline-block mr-3">
-        Built by
-
-          <a class="d-inline-block" data-hydro-click="{&quot;event_type&quot;:&quot;explore.click&quot;,&quot;payload&quot;:{&quot;click_context&quot;:&quot;TRENDING_REPOSITORIES_PAGE&quot;,&quot;click_target&quot;:&quot;CONTRIBUTING_DEVELOPER&quot;,&quot;click_visual_representation&quot;:&quot;DEVELOPER_AVATAR&quot;,&quot;actor_id&quot;:null,&quot;record_id&quot;:null,&quot;originating_url&quot;:&quot;https://github.com/trending&quot;,&quot;user_id&quot;:97867490}}" data-hydro-click-hmac="0c477586d9fdf9625bbd9252e133c30636832b1cc0f72aa7b2cdcdf866137771" data-hovercard-type="user" data-hovercard-url="/users/noafru/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="/noafru"><img class="avatar mb-1 avatar-user" src="https://avatars.githubusercontent.com/u/61191939?s=40&amp;v=4" width="20" height="20" alt="@noafru"></a>
-          <a class="d-inline-block" data-hydro-click="{&quot;event_type&quot;:&quot;explore.click&quot;,&quot;payload&quot;:{&quot;click_context&quot;:&quot;TRENDING_REPOSITORIES_PAGE&quot;,&quot;click_target&quot;:&quot;CONTRIBUTING_DEVELOPER&quot;,&quot;click_visual_representation&quot;:&quot;DEVELOPER_AVATAR&quot;,&quot;actor_id&quot;:null,&quot;record_id&quot;:null,&quot;originating_url&quot;:&quot;https://github.com/trending&quot;,&quot;user_id&quot;:97867490}}" data-hydro-click-hmac="0c477586d9fdf9625bbd9252e133c30636832b1cc0f72aa7b2cdcdf866137771" data-hovercard-type="user" data-hovercard-url="/users/microsoftopensource/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="/microsoftopensource"><img class="avatar mb-1 avatar-user" src="https://avatars.githubusercontent.com/u/22527892?s=40&amp;v=4" width="20" height="20" alt="@microsoftopensource"></a>
-          <a class="d-inline-block" data-hydro-click="{&quot;event_type&quot;:&quot;explore.click&quot;,&quot;payload&quot;:{&quot;click_context&quot;:&quot;TRENDING_REPOSITORIES_PAGE&quot;,&quot;click_target&quot;:&quot;CONTRIBUTING_DEVELOPER&quot;,&quot;click_visual_representation&quot;:&quot;DEVELOPER_AVATAR&quot;,&quot;actor_id&quot;:null,&quot;record_id&quot;:null,&quot;originating_url&quot;:&quot;https://github.com/trending&quot;,&quot;user_id&quot;:97867490}}" data-hydro-click-hmac="0c477586d9fdf9625bbd9252e133c30636832b1cc0f72aa7b2cdcdf866137771" href="/apps/microsoft-github-operations"><img class="avatar mb-1" src="https://avatars.githubusercontent.com/in/41902?s=40&amp;v=4" width="20" height="20" alt="@microsoft-github-operations"></a>
-</span>
-                           <span data-view-component="true" class="d-inline-block float-sm-right">
-        <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-star">
-    <path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25zm0 2.445L6.615 5.5a.75.75 0 01-.564.41l-3.097.45 2.24 2.184a.75.75 0 01.216.664l-.528 3.084 2.769-1.456a.75.75 0 01.698 0l2.77 1.456-.53-3.084a.75.75 0 01.216-.664l2.24-2.183-3.096-.45a.75.75 0 01-.564-.41L8 2.694v.001z"></path>
-</svg>
-        98 stars today
-</span>  </div>
-                   </article>
-               </div>
-           </div>
-       </div>
-
    </div>
 </template>
 
 <script>
 export default {
     name: "Welcome",
-    data () {
-        return {
-            alert: false,
-            isActive: false,
-        }
-    },
-    methods: {
-        vuecopydemo(index) {
-            // copied URL
-            this.$refs.clipboard[index].select();
-            document.execCommand('copy');
-            this.isActive = true;
-            setTimeout(() => this.isActive = false, 800)
-
-        }
-    },
 }
 </script>
 

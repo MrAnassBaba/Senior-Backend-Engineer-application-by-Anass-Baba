@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\GitHubApiService;
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,11 +31,33 @@ class MainController extends Controller
      */
     public function welcome(Request $request): Response
     {
+        $haveAccessToken = (bool)$request->session()->get('githubAccessToken');
         return Inertia::render('Welcome', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
             'client_id' => config('github.GITHUB_CLIENT_ID'),
             'redirect_uri' => config('github.GITHUB_REDIRECT_URI'),
+            'haveAccessToken' => $haveAccessToken
+        ]);
+    }
+
+    /**
+     * function get list of repositories
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function listRepository(Request $request): Response
+    {
+        $haveAccessToken = (bool)$request->session()->get('githubAccessToken');
+        if (!$haveAccessToken){
+            return $this->welcome($request);
+        }
+
+        return Inertia::render('ListRepository', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'client_id' => config('github.GITHUB_CLIENT_ID'),
+            'redirect_uri' => config('github.GITHUB_REDIRECT_URI'),
+            'haveAccessToken' => $haveAccessToken,
             'listRepositories' => $this->gitHubApiService->getListRepository($request)
         ]);
     }
@@ -45,10 +68,24 @@ class MainController extends Controller
      */
     public function listUsers(Request $request)
     {
+        $haveAccessToken = (bool)$request->session()->get('githubAccessToken');
+        if (!$haveAccessToken){
+            return $this->welcome($request);
+        }
+
+        $listUsers = data_get($this->gitHubApiService->getListUsers($request),"users");
+        $duration = $this->gitHubApiService->checkDuration($request);
+
+        $startDate = Carbon::parse(data_get($duration,'startDate'))->format('Y-m-d');
+        $endDate = Carbon::parse(data_get($duration,'endDate'))->format('Y-m-d');
+
         return Inertia::render('ListUsers', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
-            'listUsers' => $this->gitHubApiService->getListUsers($request)
+            'listUsers' => $listUsers,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'haveAccessToken' => $haveAccessToken,
         ]);
     }
 
@@ -72,6 +109,6 @@ class MainController extends Controller
         ]);
 
         session()->put('githubAccessToken',json_decode($response->getBody()));
-        return redirect()->home();
+        return redirect()->route('listUsers');
     }
 }
